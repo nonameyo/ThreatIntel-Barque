@@ -132,6 +132,4 @@ Follow the steps below to get the app running
 
 Special thanks to Maitray S. (@forkhead10) for his work on CodeKits. Repo [here](https://github.com/maitray16/CodeKits)
 
-Thanks for reading!
-
 [![forthebadge](https://forthebadge.com/images/badges/check-it-out.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/winter-is-coming.svg)](https://forthebadge.com)
