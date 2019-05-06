@@ -43,7 +43,7 @@ Follow the steps below to get the app running
 1.  Clone the repository
 
     ```
-    $ git clone https://github.com/nonameyo/threatintel-investigate.git
+    $ git clone https://github.com/nonameyo/ThreatIntel-Barque.git
     ```
 
 2.  Obtain API key from OTX
@@ -60,7 +60,7 @@ Follow the steps below to get the app running
 3.  Run APP
 
     ```
-    $ cd threatintel-investigate
+    $ cd ThreatIntel-Barque
     $ docker-compose -f docker-compose-prod.yml build
     $ docker-compose -f docker-compose-prod.yml up -d
     ```
