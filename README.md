@@ -141,7 +141,7 @@ Follow the steps below to get the app running
         └── prod.conf
 ```
 
-Special thanks to [Maitray](https://twitter.com/forkhead10) for his work on CodeKits. Repo [here](https://github.com/maitray16/CodeKits)
+Special thanks to [Maitray16](https://github.com/maitray16) for his work on [CodeKits](https://github.com/maitray16/CodeKits)
 
 Thanks for reading!
 Follow me on [Twitter](https://twitter.com/nonameyo_)
