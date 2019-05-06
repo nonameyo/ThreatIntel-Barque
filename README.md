@@ -17,6 +17,14 @@ There are 4 available endpoints
 3. Hash: POST request with JSON input as {"hash":["hash1","hash2","hash3","ETC"]}
 4. Domain: POST request with JSON input as {"domain":["domain1","domain2","domain3","ETC"]}
 
+#### Barque API response for IOCs:
+1. IOC and type
+2. Pulse count: how many times this specific IOC is present in OTX Pulses 
+3. Associated IPs, Hashes, Domains, URLs, Emails and their counts
+4. Reference Links
+5. GEO info for IOC
+6. Full OTX Intel dump
+
 ### Technologies
 
 - Reverse Proxy - Nginx
