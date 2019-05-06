@@ -1,0 +1,26 @@
+version: "3.5"
+
+services:
+  
+  investigate-server:
+    build: ./services/investigate-server
+    image: investigate-server
+    container_name: barque-investigate-server
+    expose:
+      - "5000"
+    volumes:
+      - "./services/investigate-server:/usr/src/app"
+    environment:
+      - BUILD=Production
+    command: gunicorn -b 0.0.0.0:5000 -k gevent app.server:run() workers=3
+    
+  barque-nginx:
+    container_name: barque-nginx
+    build:
+      context: ./services/nginx
+      dockerfile: Dockerfile-prod
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - investigate-server
