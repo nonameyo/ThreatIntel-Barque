@@ -1,6 +1,7 @@
 # BARQUE
 
-SHIPS OF THE GODS, KING, & OF THE PEOPLE. Web server endpoints to ship desired data across the realms
+SHIPS OF THE GODS, KINGS, & OF THE PEOPLE. Web server endpoints to ship desired data across the realms
+
 > Version 1.0.0
 
 ### About
