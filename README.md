@@ -141,7 +141,15 @@ Follow the steps below to get the app running
         └── prod.conf
 ```
 
-Special thanks to Maitray S. (@forkhead10) for his work on CodeKits. Repo [here](https://github.com/maitray16/CodeKits)
+Special thanks to [Maitray](https://twitter.com/forkhead10) for his work on CodeKits. Repo [here](https://github.com/maitray16/CodeKits)
 
 Thanks for reading!
 Follow me on [Twitter](https://twitter.com/nonameyo_)
+
+
+
+<br/>
+
+### KNOWN ISSUES:
+1. Associated IOCs count:
+    - Count is limited to most recent 10. Recursive queries are required for full list of associated IOCs. Will be covered in future versions
