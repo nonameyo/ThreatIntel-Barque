@@ -14,11 +14,12 @@ Using [AlienVault's](https://github.com/AlienVault-OTX/OTX-Python-SDK) Open Thre
 3.  Hash: to query OTX for threat intel data on specific hashe(s). '/threatintel/hash'
 4.  Domain: to query OTX for threat intel data on specific domain(s). '/threatintel/domain'
 
-#### Methods of communicating with Barque:
-1. Ping: GET request to http://SERVER_IP/server/ping
-2. IP: POST request with JSON input as {"ip":["IP1","IP2","IP3","ETC"]}
-3. Hash: POST request with JSON input as {"hash":["hash1","hash2","hash3","ETC"]}
-4. Domain: POST request with JSON input as {"domain":["domain1","domain2","domain3","ETC"]}
+#### Barque Use Cases:
+1. Firewall logs: inbound & outbound external IPs - Enrich firewall logs with Threat Intel
+2. DNS logs: Domain queries - Enrich DNS logs with Threat Intel 
+3. AV/EDR logs: File hashes - Enrich AV/EDR alerts with Threat Intel info on specific hashes
+4. Log enrichments can be done during log ingestion to SIEM or add Barque response to a DB for later querying
+5. Research of specific IOCs using AlienVault OTX by sending POST requests
 
 #### Barque API response for IOCs:
 1. IOC and type
