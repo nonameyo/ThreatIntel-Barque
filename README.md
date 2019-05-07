@@ -20,6 +20,7 @@ Using [AlienVault's](https://github.com/AlienVault-OTX/OTX-Python-SDK) Open Thre
 3. AV/EDR logs: File hashes - Enrich AV/EDR alerts with Threat Intel info on specific hashes
 4. Log enrichments can be done during log ingestion to SIEM or add Barque response to a DB for later querying
 5. Research of specific IOCs using AlienVault OTX by sending POST requests
+6. Server can be queried via curl/python/bash or manually by [Postman](https://www.getpostman.com/downloads/). See [configuration](https://github.com/nonameyo/ThreatIntel-Barque/blob/master/resources/Barque.postman_collection.json) file
 
 #### Barque API response for IOCs:
 1. IOC and type
