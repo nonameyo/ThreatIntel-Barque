@@ -148,8 +148,3 @@ Follow me on [Twitter](https://twitter.com/nonameyo_)
 
 
 
-<br/>
-
-### KNOWN ISSUES:
-1. Associated IOCs count:
-    - Count is limited to most recent 10. Recursive queries are required for full list of associated IOCs. Will be covered in future versions
