@@ -1,0 +1,116 @@
+{
+	"info": {
+		"_postman_id": "485cfd44-ac9b-4e01-b6be-4abd2aad2668",
+		"name": "Barque",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "barque health_check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://Barque/server/ping",
+					"protocol": "http",
+					"host": [
+						"Barque"
+					],
+					"path": [
+						"server",
+						"ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "threatintel_hash",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"hash\":[\"50300de5e4786530ea603224ccbcbb02\"]\n}"
+				},
+				"url": {
+					"raw": "http://Barque/threatintel/hash",
+					"protocol": "http",
+					"host": [
+						"Barque"
+					],
+					"path": [
+						"threatintel",
+						"hash"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "threatintel_domain",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"domain\":[\"esghthoodivettewl.com\"]\n}"
+				},
+				"url": {
+					"raw": "http://Barque/threatintel/domain",
+					"protocol": "http",
+					"host": [
+						"Barque"
+					],
+					"path": [
+						"threatintel",
+						"domain"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "threatintel_ip",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"ip\":[\"139.59.19.157\"]\n}"
+				},
+				"url": {
+					"raw": "http://Barque/threatintel/ip",
+					"protocol": "http",
+					"host": [
+						"Barque"
+					],
+					"path": [
+						"threatintel",
+						"ip"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

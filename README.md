@@ -83,8 +83,8 @@ Follow the steps below to get the app running
 - make a GET request to /server/ping. JSON respones should look like:
     ```
     {
-    "status": "success",
-    "message": "barque-investigate-server - active"
+        "status": "success",
+        "message": "barque-investigate-server - active"
     }
     ```
 
@@ -92,24 +92,78 @@ Follow the steps below to get the app running
 - make a POST request to /threatintel/ip with JSON in body. Should look like:
     ```
     {
-	"ip":["209.99.40.222"]
+        "ip":["209.99.40.222"]
     }
+    ```
+- cURL:
+    ```
+    curl -X POST http://Barque/threatintel/ip -d '{"ip":["209.99.40.222"]}'
+    ```
+- Python Requests:
+    ```
+    import requests
+
+    url = "http://Barque/threatintel/ip"
+
+    payload = "{\n\t\"ip\":[\"209.99.40.222\"]\n}"
+    headers = {
+        'Content-Type': "application/json",
+        'cache-control': "no-cache"
+        }
+    response = requests.request("POST", url, data=payload, headers=headers)
+    print(response.text)
     ```
 
 ### Use the App - ThreatIntel for Hash:    
 - make a POST request to /threatintel/hash with JSON in body. Should look like:
     ```
     {
-    "hash": ["db349b97c37d22f5ea1d1841e3c89eb4"]
+        "hash": ["db349b97c37d22f5ea1d1841e3c89eb4"]    
     }
+    ```
+- cURL:
+    ```
+    curl -X POST http://Barque/threatintel/hash -d '{"hash":["db349b97c37d22f5ea1d1841e3c89eb4"]}'
+    ```
+- Python Requests:
+    ```
+    import requests
+
+    url = "http://Barque/threatintel/hash"
+
+    payload = "{\n\t\"hash\":[\"db349b97c37d22f5ea1d1841e3c89eb4\"]\n}"
+    headers = {
+        'Content-Type': "application/json",
+        'cache-control': "no-cache"
+        }
+    response = requests.request("POST", url, data=payload, headers=headers)
+    print(response.text)
     ```
 
 ### Use the App - ThreatIntel for Domain:    
 - make a POST request to /threatintel/domain with JSON in body. Should look like:
     ```
     {
-    "domain": ["iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com"]
+        "domain": ["iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com"] 
     }
+    ```
+- cURL:
+    ```
+    curl -X POST http://Barque/threatintel/domain -d '{"domain":["iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com"]}'
+    ```
+- Python Requests:
+    ```
+    import requests
+
+    url = "http://Barque/threatintel/domain"
+
+    payload = "{\n\t\"domain\":[\"iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com\"]\n}"
+    headers = {
+        'Content-Type': "application/json",
+        'cache-control': "no-cache"
+        }
+    response = requests.request("POST", url, data=payload, headers=headers)
+    print(response.text)
     ```
 
 ### Directory Structure
@@ -117,6 +171,8 @@ Follow the steps below to get the app running
 ├── README.md
 ├── docker-compose-dev.yml
 ├── docker-compose-prod.yml
+├── resources
+│   └── Barque.postman_collection.json
 └── services
     ├── investigate-server
     │   ├── app
