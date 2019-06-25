@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "485cfd44-ac9b-4e01-b6be-4abd2aad2668",
-		"name": "Barque",
+		"name": "Barque-Github",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -10,10 +10,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://Barque/server/ping",
 					"protocol": "http",
@@ -107,6 +103,34 @@
 					"path": [
 						"threatintel",
 						"ip"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "threatintel_cve",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"cve\":[\"CVE-2017-0143\"]\n}"
+				},
+				"url": {
+					"raw": "http://Barque/threatintel/cve",
+					"protocol": "http",
+					"host": [
+						"Barque"
+					],
+					"path": [
+						"threatintel",
+						"cve"
 					]
 				}
 			},

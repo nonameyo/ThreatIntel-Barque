@@ -349,12 +349,103 @@ class GetThreatIntelDomain(object):
         resp.body = json.dumps(result)
 
 
+class GetThreatIntelCVE(object):
+    """
+    Endpoint to get threat intel data on CVEs from user.
+    Methods : [post]
+    Params:
+        "cve":["cve#1", "cve#2"]
+    Returns:
+        LIST - OTX threat intel results for CVEs
+    """
+
+    def __init__(self):
+        self.otx = OTXv2(BaseConfig.API_KEY, server=BaseConfig.OTX_URL)
+        self.multiregex = MultiRegex()
+
+    def on_post(self, req, resp):
+        result = []
+        data = req.context['body']
+        cve_list = data['cve']
+
+        for cve in cve_list:
+            _type, key = self.multiregex(cve)
+            if _type == "Invalid":
+                data = {'key': cve, 'msg': "Invalid CVE"}
+                result.append(data)
+            else:
+                try:
+                    cve_type = "IndicatorTypes." + _type
+                    otx_cve = {}
+                    alltags = []
+                    flattendtags = []
+
+                    otx_data = str(self.otx.get_indicator_details_full(
+                        eval(cve_type), cve))
+                    otxdict = ast.literal_eval(otx_data)
+                    otx_cve["key"] = cve
+                    otx_cve['type'] = otxdict.get('general', {}).get(
+                        'base_indicator', {}).get('type', "N/A")
+                    otx_cve['intel_status'] = "success"
+                    otx_cve['pulse_count'] = otxdict.get(
+                        'general', {}).get('pulse_info', {}).get('count', 0)
+                    otx_cve['date_created'] = otxdict.get(
+                        'general', {}).get('date_created', "N/A")
+                    otx_cve['date_modified'] = otxdict.get(
+                        'general', {}).get('date_modified', "N/A")
+                    otx_cve['seen_in_wild'] = otxdict.get(
+                        'general', {}).get('seen_wild', "N/A")
+                    otx_cve['cvss_score'] = otxdict.get(
+                        'general', {}).get('cvss', {}).get('Score', 0)
+                    otx_cve['access_vector'] = otxdict.get(
+                        'general', {}).get('cvss', {}).get('Access-Vector', "N/A")
+                    otx_cve['access_complexity'] = otxdict.get(
+                        'general', {}).get('cvss', {}).get('Access-Complexity', "N/A")
+                    otx_cve['cvssV3_score'] = otxdict.get('general', {}).get(
+                        'cvssv3', {}).get('cvssV3', {}).get('baseScore', 0)
+                    otx_cve['severity'] = otxdict.get(
+                        'general', {}).get('cvssv3', {}).get('cvssV3', {}).get('baseSeverity', "N/A")
+                    otx_cve['user_interaction'] = otxdict.get(
+                        'general', {}).get('cvssv3', {}).get('cvssV3', {}).get('userInteraction', "N/A")
+                    otx_cve['privileges_required'] = otxdict.get(
+                        'general', {}).get('cvssv3', {}).get('cvssV3', {}).get('privilegesRequired', "N/A")
+                    otx_cve['mitre_url'] = otxdict.get(
+                        'general', {}).get('mitre_url', "N/A")
+                    otx_cve['cve_description'] = otxdict.get(
+                        'general', {}).get('description', "N/A")
+                    otx_cve['affected_products'] = otxdict.get(
+                        'general', {}).get('products', "N/A")
+                    otx_cve['known_exploits'] = otxdict.get(
+                        'general', {}).get('exploits', "N/A")
+                    otx_cve['references'] = otxdict.get(
+                        'general', {}).get('pulse_info', {}).get('references', "N/A")
+                    in_tags = otxdict.get('general', {}).get(
+                        'pulse_info', {}).get('pulses', {})
+                    for i in in_tags:
+                        alltags.append(i.get('tags'))
+                    for tag in alltags:
+                        for val in tag:
+                            flattendtags.append(val)
+
+                    otx_cve['tags'] = list(set(flattendtags))
+                    otx_cve["intel"] = otxdict
+                    result.append(otx_cve)
+                except:
+                    data = {'key': cve, 'msg': 'No Data Found',
+                            'intel_status': "fail", 'type': _type}
+                    result.append(data)
+
+        resp.status = falcon.HTTP_200
+        resp.body = json.dumps(result)
+
+
 def initialize() -> falcon.API:
     app = falcon.API(middleware=[Middelware()])
     app.add_route('/server/ping', SanityCheck())
     app.add_route('/threatintel/ip', GetThreatIntelIP())
     app.add_route('/threatintel/hash', GetThreatIntelHash())
     app.add_route('/threatintel/domain', GetThreatIntelDomain())
+    app.add_route('/threatintel/cve', GetThreatIntelCVE())
     return app
 
 

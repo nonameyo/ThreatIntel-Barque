@@ -2,7 +2,7 @@
 
 SHIPS OF THE GODS, KINGS, & OF THE PEOPLE. Web server endpoints to ship desired data across the realms
 
-> Version 1.0.0
+> Version 1.0.1
 
 ### About
 
@@ -13,6 +13,7 @@ Using [AlienVault's](https://github.com/AlienVault-OTX/OTX-Python-SDK) Open Thre
 2.  IP: to query OTX for threat intel data on specific IP(s).'/threatintel/ip'
 3.  Hash: to query OTX for threat intel data on specific hashe(s). '/threatintel/hash'
 4.  Domain: to query OTX for threat intel data on specific domain(s). '/threatintel/domain'
+5.  CVE: to query OTX for threat intel data on specific cve(s). '/threatintel/cve'
 
 #### Barque Use Cases:
 1. Firewall logs: inbound & outbound external IPs - Enrich firewall logs with Threat Intel
@@ -28,7 +29,8 @@ Using [AlienVault's](https://github.com/AlienVault-OTX/OTX-Python-SDK) Open Thre
 3. Associated IPs, Hashes, Domains, URLs, Emails and their counts
 4. Reference Links
 5. GEO info for IOC
-6. Full OTX Intel dump
+6. CVE Details
+7. Full OTX Intel dump
 
 ### Technologies
 
@@ -159,6 +161,32 @@ Follow the steps below to get the app running
     url = "http://Barque/threatintel/domain"
 
     payload = "{\n\t\"domain\":[\"iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com\"]\n}"
+    headers = {
+        'Content-Type': "application/json",
+        'cache-control': "no-cache"
+        }
+    response = requests.request("POST", url, data=payload, headers=headers)
+    print(response.text)
+    ```
+
+### Use the App - ThreatIntel for CVE:    
+- make a POST request to /threatintel/cve with JSON in body. Should look like:
+    ```
+    {
+        "cve": ["CVE-2017-0143"] 
+    }
+    ```
+- cURL:
+    ```
+    curl -X POST http://Barque/threatintel/cve -d '{"cve":["CVE-2017-0143"]}'
+    ```
+- Python Requests:
+    ```
+    import requests
+
+    url = "http://Barque/threatintel/cve"
+
+    payload = "{\n\t\"CVE-2017-0143\":[\"CVE-2017-0143\"]\n}"
     headers = {
         'Content-Type': "application/json",
         'cache-control': "no-cache"
