@@ -4,6 +4,8 @@ SHIPS OF THE GODS, KINGS, & OF THE PEOPLE. Web server endpoints to ship desired 
 
 > Version 1.0.1
 
+Learning coding as I go and I know there are better ways to code this but here is my version of it.
+
 ### About
 
 Using [AlienVault's](https://github.com/AlienVault-OTX/OTX-Python-SDK) Open Threat Exchange to gather Threat Intel data on IPs, Domains and Hashes. This is used to enrich Blue Team logs such as firewall logs, email, DNS, AV and EDR for IOCs. This is a part of Operational Threat Intelligence program for an organization.

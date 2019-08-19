@@ -375,109 +375,63 @@ class GetThreatIntelCVE(object):
                 result.append(data)
             else:
                 try:
-                    hash_type = "IndicatorTypes." + _type
-                    otx_hash = {}
+                    cve_type = "IndicatorTypes." + _type
+                    otx_cve = {}
                     alltags = []
                     flattendtags = []
-                    allhost_cuckoo = []
-                    allurl_cuckoo = []
-                    allport_cuckoo = []
-                    allips = []
 
-                    otx_data = str(
-                        self.otx.get_indicator_details_full(eval(hash_type), _hash))
+                    otx_data = str(self.otx.get_indicator_details_full(
+                        eval(cve_type), cve))
                     otxdict = ast.literal_eval(otx_data)
-                    otx_hash["key"] = _hash
-                    otx_hash['type'] = otxdict.get(
-                        'general', {}).get('type', "N/A")
-                    otx_hash['intel_status'] = "success"
-                    otx_hash['pulse_count'] = otxdict.get(
+                    otx_cve["key"] = cve
+                    otx_cve['type'] = otxdict.get('general', {}).get(
+                        'base_indicator', {}).get('type', "N/A")
+                    otx_cve['intel_status'] = "success"
+                    otx_cve['pulse_count'] = otxdict.get(
                         'general', {}).get('pulse_info', {}).get('count', 0)
-                    otx_hash['sha1'] = otxdict.get('analysis', {}).get(
-                        'analysis', {}).get('info', {}).get('results', {}).get('sha1', "N/A")
-                    otx_hash['sha256'] = otxdict.get('analysis', {}).get(
-                        'analysis', {}).get('info', {}).get('results', {}).get('sha256', "N/A")
-                    otx_hash['md5'] = otxdict.get('analysis', {}).get(
-                        'analysis', {}).get('info', {}).get('results', {}).get('md5', "N/A")
-                    otx_hash['file_class'] = otxdict.get('analysis', {}).get('analysis', {}).get(
-                        'info', {}).get('results', {}).get('file_class', "N/A")
-                    otx_hash['file_type'] = otxdict.get('analysis', {}).get('analysis', {}).get(
-                        'info', {}).get('results', {}).get('file_type', "N/A")
+                    otx_cve['date_created'] = otxdict.get(
+                        'general', {}).get('date_created', "N/A")
+                    otx_cve['date_modified'] = otxdict.get(
+                        'general', {}).get('date_modified', "N/A")
+                    otx_cve['seen_in_wild'] = otxdict.get(
+                        'general', {}).get('seen_wild', "N/A")
+                    otx_cve['cvss_score'] = otxdict.get(
+                        'general', {}).get('cvss', {}).get('Score', 0)
+                    otx_cve['access_vector'] = otxdict.get(
+                        'general', {}).get('cvss', {}).get('Access-Vector', "N/A")
+                    otx_cve['access_complexity'] = otxdict.get(
+                        'general', {}).get('cvss', {}).get('Access-Complexity', "N/A")
+                    otx_cve['cvssV3_score'] = otxdict.get('general', {}).get(
+                        'cvssv3', {}).get('cvssV3', {}).get('baseScore', 0)
+                    otx_cve['severity'] = otxdict.get(
+                        'general', {}).get('cvssv3', {}).get('cvssV3', {}).get('baseSeverity', "N/A")
+                    otx_cve['user_interaction'] = otxdict.get(
+                        'general', {}).get('cvssv3', {}).get('cvssV3', {}).get('userInteraction', "N/A")
+                    otx_cve['privileges_required'] = otxdict.get(
+                        'general', {}).get('cvssv3', {}).get('cvssV3', {}).get('privilegesRequired', "N/A")
+                    otx_cve['mitre_url'] = otxdict.get(
+                        'general', {}).get('mitre_url', "N/A")
+                    otx_cve['cve_description'] = otxdict.get(
+                        'general', {}).get('description', "N/A")
+                    otx_cve['affected_products'] = otxdict.get(
+                        'general', {}).get('products', "N/A")
+                    otx_cve['known_exploits'] = otxdict.get(
+                        'general', {}).get('exploits', "N/A")
+                    otx_cve['references'] = otxdict.get(
+                        'general', {}).get('pulse_info', {}).get('references', "N/A")
                     in_tags = otxdict.get('general', {}).get(
                         'pulse_info', {}).get('pulses', {})
-
                     for i in in_tags:
                         alltags.append(i.get('tags'))
                     for tag in alltags:
                         for val in tag:
                             flattendtags.append(val)
 
-                    otx_hash['tags'] = list(set(flattendtags))
-
-                    if 'exiftool' in otxdict['analysis']['analysis']['plugins']:
-                        in_exfiltool = otxdict.get('analysis', {}).get('analysis', {}).get(
-                            'plugins', {}).get('exiftool', {}).get('results', {})
-
-                    if 'msdefender' in otxdict['analysis']['analysis']['plugins']:
-                        in_msdefender = otxdict.get('analysis', {}).get('analysis', {}).get(
-                            'plugins', {}).get('msdefender', {}).get('results', {})
-
-                    if 'avast' in otxdict['analysis']['analysis']['plugins']:
-                        in_avast = otxdict.get('analysis', {}).get('analysis', {}).get(
-                            'plugins', {}).get('avast', {}).get('results', {})
-
-                    if 'cuckoo' in otxdict['analysis']['analysis']['plugins']:
-                        in_virustotal = otxdict.get('analysis', {}).get('analysis', {}).get(
-                            'plugins', {}).get('cuckoo', {}).get('result', {}).get('virustotal', {})
-                        in_http = otxdict.get('analysis', {}).get('analysis', {}).get('plugins', {}).get(
-                            'cuckoo', {}).get('result', {}).get('network', {}).get('http', {})
-                        in_dns = otxdict.get('analysis', {}).get('analysis', {}).get('plugins', {}).get(
-                            'cuckoo', {}).get('result', {}).get('network', {}).get('dns', {})
-                        in_attack = otxdict.get('analysis', {}).get('analysis', {}).get('plugins', {}).get(
-                            'cuckoo', {}).get('result', {}).get('att&ck', {})
-
-                        for i in in_http:
-                            allhost_cuckoo.append(i.get('host'))
-                            allurl_cuckoo.append(i.get('uri'))
-                            allport_cuckoo.append(i.get('port'))
-
-                        for i in in_dns:
-                            allhost_cuckoo.append(i.get('request'))
-                            for x in i.get('answers'):
-                                # find valid associated IPs in malicious hash
-                                try:
-                                    ipaddress.ip_address(x.get('data'))
-                                    allips.append(x.get('data'))
-                                except ValueError:
-                                    pass
-
-                    otx_hash['avast_finding'] = in_avast.get(
-                        "detection", "N/A")
-                    otx_hash['avast_notes'] = in_avast.get("alerts", "N/A")
-                    otx_hash['ms_defender_finding'] = in_msdefender.get(
-                        "detection", "N/A")
-                    otx_hash['ms_defender_notes'] = in_msdefender.get(
-                        "alerts", "N/A")
-                    otx_hash['exiftool_original_file_name'] = in_exfiltool.get(
-                        "EXE:OriginalFileName", "N/A")
-                    otx_hash['exiftool_product_name'] = in_exfiltool.get(
-                        "EXE:ProductName", "N/A")
-                    otx_hash['exiftool_file_description'] = in_exfiltool.get(
-                        "EXE:FileDescription", "N/A")
-                    otx_hash['vt_positives'] = in_virustotal.get(
-                        "positives", 0)
-                    otx_hash['vt_total'] = in_virustotal.get("total", 0)
-                    otx_hash['vt_link'] = in_virustotal.get("permalink", "N/A")
-                    otx_hash['mitre_ttps'] = in_attack
-                    otx_hash['associated_ips'] = list(set(allips))
-                    otx_hash['associated_hostnames'] = list(
-                        set(allhost_cuckoo))
-                    otx_hash['associated_urls'] = list(set(allurl_cuckoo))
-                    otx_hash['associated_ports'] = list(set(allport_cuckoo))
-                    otx_hash["intel"] = otxdict
-                    result.append(otx_hash)
+                    otx_cve['tags'] = list(set(flattendtags))
+                    otx_cve["intel"] = otxdict
+                    result.append(otx_cve)
                 except:
-                    data = {'key': _hash, 'msg': "No Data Found",
+                    data = {'key': cve, 'msg': 'No Data Found',
                             'intel_status': "fail", 'type': _type}
                     result.append(data)
 
