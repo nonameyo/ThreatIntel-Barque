@@ -1,5 +1,5 @@
 # base image
-FROM python:3.8-slim
+FROM python:3.14.0a1-slim
 
 # set working directory
 RUN mkdir -p /usr/src/app
